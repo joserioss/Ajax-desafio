@@ -1,5 +1,6 @@
 const URL1 = 'https://jsonplaceholder.typicode.com/users'
 const URL2 = 'https://jsonplaceholder.typicode.com/posts'
+const URL3 = 'https://jsonplaceholder.typicode.com/albums'
 
 $(document).ready(() => {
     $('#combo1').change(seleccion)
@@ -14,7 +15,7 @@ function seleccion(){
             break;
         case "1": archivo = 'posteos.html'
             break;
-        case "2": archivo = 'comentarios.html'
+        case "2": archivo = 'album.html'
             break;
     }
     $.ajax({
@@ -62,5 +63,23 @@ function cargarPosteos(){
     </tr>
     `
         document.getElementById("cuerpo_tabla_posteo").innerHTML = datosTxT
+    }
+}
+
+function cargarAlbumes(){
+    let datosTxT
+
+    fetch(URL3, { method: 'GET' })
+        .then(x => x.json())
+        .then(x => x.forEach(post => imprime_posteo(post)))
+
+    const imprime_posteo = (elemento) => {
+        datosTxT += ` 
+    <tr>
+        <td>${elemento.userId}</td>    
+        <td>${elemento.title}</td>
+    </tr>
+    `
+        document.getElementById("cuerpo_tabla_album").innerHTML = datosTxT
     }
 }
